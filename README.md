@@ -105,6 +105,86 @@ The main challenges addressed are:
 +----------------+     +----------------+
 ```
 
+## Getting Started
+
+### Prerequisites
+- Java 11 or higher
+- Maven
+- Git
+
+### Installation Steps
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/chandini2595/command-line-application-which-parses-a-log-file.git
+   cd command-line-application-which-parses-a-log-file
+   ```
+
+2. **Build the project**
+   ```bash
+   mvn clean package
+   ```
+   This will create a JAR file in the `target` directory.
+
+3. **Create input directory and add log files**
+   ```bash
+   mkdir input
+   ```
+   Add your log files in the `input` directory. Log files should follow the format:
+   ```
+   timestamp=2024-02-24T16:22:15Z metric=cpu_usage_percent host=webserver1 value="72"
+   timestamp=2024-02-24T16:22:20Z level=INFO message="Scheduled maintenance starting" host=webserver1
+   timestamp=2024-02-24T16:22:25Z request_method=POST request_url="/api/update" response_status=202 response_time_ms=200 host=webserver1
+   ```
+
+4. **Run the application**
+   ```bash
+   java -jar target/log-parser-1.0-SNAPSHOT-jar-with-dependencies.jar --file input/your-log-file.log
+   ```
+
+5. **Check the results**
+   The application will create an `output` directory containing:
+   - `apm.json`: APM metrics statistics
+   - `application.json`: Application log level counts
+   - `request.json`: Request statistics per API route
+
+### Example Usage
+
+1. **Create a sample log file**
+   ```bash
+   echo 'timestamp=2024-02-24T16:22:15Z metric=cpu_usage_percent host=webserver1 value="72"
+   timestamp=2024-02-24T16:22:20Z level=INFO message="Scheduled maintenance starting" host=webserver1
+   timestamp=2024-02-24T16:22:25Z request_method=POST request_url="/api/update" response_status=202 response_time_ms=200 host=webserver1' > input/sample.log
+   ```
+
+2. **Run with the sample file**
+   ```bash
+   java -jar target/log-parser-1.0-SNAPSHOT-jar-with-dependencies.jar --file input/sample.log
+   ```
+
+3. **View the results**
+   ```bash
+   cat output/apm.json
+   cat output/application.json
+   cat output/request.json
+   ```
+
+### Troubleshooting
+
+1. **If you get "No such file or directory" error**
+   - Make sure you're in the correct directory
+   - Verify that the input file exists
+   - Check if the input file path is correct
+
+2. **If you get "Error: Unable to access jarfile"**
+   - Make sure you've run `mvn clean package` successfully
+   - Verify that the JAR file exists in the `target` directory
+
+3. **If you get "Invalid log format" errors**
+   - Check that your log file follows the correct format
+   - Ensure all required fields are present
+   - Verify that timestamps are in ISO format
+
 ## Building and Running
 
 ### Prerequisites
