@@ -66,45 +66,6 @@ The main challenges addressed are:
 - Can be harder to understand than composition
 - Changes to the template affect all subclasses
 
-## Class Diagram
-
-```
-+----------------+     +----------------+     +----------------+
-|    LogEntry    |<----|  ApmLogEntry   |     |  LogParser     |
-+----------------+     +----------------+     +----------------+
-| +timestamp     |     | +metric        |     | +parse()       |
-| +host          |     | +value         |     | +canParse()    |
-| +attributes    |     +----------------+     +----------------+
-+----------------+           ^                        ^
-       ^                    |                        |
-       |                    |                        |
-+----------------+     +----------------+     +----------------+
-|ApplicationLog  |     | RequestLogEntry|     | ApmLogParser   |
-+----------------+     +----------------+     +----------------+
-| +level         |     | +requestMethod |     | +parse()       |
-| +message       |     | +requestUrl    |     | +canParse()    |
-+----------------+     | +responseStatus|     +----------------+
-                       | +responseTimeMs|             ^
-                       +----------------+             |
-                                                     |
-+----------------+     +----------------+     +----------------+
-| LogAggregator  |<----| ApmAggregator  |     |AppLogParser    |
-+----------------+     +----------------+     +----------------+
-| +aggregate()   |     | +metricValues  |     | +parse()       |
-| +getResult()   |     | +aggregate()   |     | +canParse()    |
-| +reset()       |     | +getResult()   |     +----------------+
-+----------------+     +----------------+
-       ^
-       |
-+----------------+     +----------------+
-|AppAggregator   |     |RequestAggregator|
-+----------------+     +----------------+
-| +levelCounts   |     | +routeStats    |
-| +aggregate()   |     | +aggregate()   |
-| +getResult()   |     | +getResult()   |
-+----------------+     +----------------+
-```
-
 ## Getting Started
 
 ### Prerequisites
